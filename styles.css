@@ -56,8 +56,8 @@ body {
 }
 
 #canvas {
-  width: 400px;
-  height: 400px;
+  width: 500px;
+  height: 500px;
 }
 
 .ripple {
@@ -72,7 +72,7 @@ body {
 
 @keyframes ripple-effect {
   to {
-    transform: scale(125);
-    /* opacity: 0.01; */
+    transform: scale(140);
+    background-color: transparent;
   }
 }

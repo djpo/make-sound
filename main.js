@@ -2,6 +2,7 @@ const minFreq = 30;
 const maxFreq = 1000;
 const minDelay = 0.01;
 const maxDelay = 2;
+const minAnimDuration = 0.4;
 
 const canvas = document.getElementById("canvas");
 
@@ -37,9 +38,17 @@ canvas.addEventListener("click", function (e) {
     ${Math.floor(255 * (1 - ratioX))}
   )`;
 
-  applyCursorRippleEffect(e);
+  const colorTranslucent = `rgba(
+    ${Math.floor(255 * ratioX)},
+    ${Math.floor(255 * ratioY)},
+    ${Math.floor(255 * (1 - ratioX))},
+    0.7
+  )`;
+
+  applyCursorRippleEffect(e, ratioY);
   const latestRipple = document.querySelector(".ripple:last-child");
   latestRipple.style.borderColor = color;
+  latestRipple.style.backgroundColor = colorTranslucent;
 
   // set frequency based on X coordinate
   const freq = minFreq + ratioX * (maxFreq - minFreq);
@@ -73,13 +82,16 @@ function playTone(freq, delay) {
   return osc;
 }
 
-function applyCursorRippleEffect(e) {
+function applyCursorRippleEffect(e, ratioY) {
   const ripple = document.createElement("div");
 
   ripple.className = "ripple";
   ripple.style.left = `${e.clientX}px`;
   ripple.style.top = `${e.clientY}px`;
-  ripple.style.animation = "ripple-effect 2s linear";
+
+  const animDuration =
+    minAnimDuration + ratioY * (maxDelay - minAnimDuration) * 1.3;
+  ripple.style.animation = `ripple-effect ${animDuration}s linear`;
 
   canvas.appendChild(ripple);
 
