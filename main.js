@@ -1,5 +1,5 @@
-var canvas = document.getElementById("main");
-var context = canvas.getContext("2d");
+// var canvas = document.getElementById("main");
+// var context = canvas.getContext("2d");
 
 // listen to keyboard events
 document.addEventListener("keydown", function (e) {
@@ -20,3 +20,26 @@ document.addEventListener("keydown", function (e) {
     console.log("DOWN");
   }
 });
+
+document.querySelector("canvas").addEventListener("click", function () {
+  console.log("click");
+
+  try {
+    context = new AudioContext();
+    console.log("new AudioContext created successfully");
+  } catch (e) {
+    alert("Web Audio API is not supported in this browser");
+  }
+});
+
+// // ALT: load first, then resume playback when user interacts
+// var context;
+// window.onload = function () {
+//   context = new AudioContext();
+//   // set up all nodes
+//   // ...
+// };
+// // (then, in event listener)
+// context.resume().then(() => {
+//   console.log("Playback resumed successfully");
+// });
