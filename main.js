@@ -27,15 +27,16 @@ function changeVolume() {
 
 // listen to clicks on canvas
 document.querySelector("canvas").addEventListener("click", function (e) {
-  const canvasRatioX =
-    (e.clientX - canvasElem.offsetLeft) / canvasElem.offsetWidth;
+  // calculate ratios of click coordinates to canvas
+  const ratioX = (e.clientX - canvasElem.offsetLeft) / canvasElem.offsetWidth;
+  const ratioY = (e.clientY - canvasElem.offsetTop) / canvasElem.offsetHeight;
 
-  // change canvas color based on horizontal click coordinate
-  const color = `rgb(${255 * canvasRatioX}, 255, ${255 * (1 - canvasRatioX)})`;
+  // change canvas color based on X & Y coordinates
+  const color = `rgb(${255 * ratioX}, ${255 * ratioY}, ${255 * (1 - ratioX)})`;
   canvasElem.style.backgroundColor = color;
 
-  // set frequency based on horizontal click coordinate
-  const freq = minFreq + canvasRatioX * (maxFreq - minFreq);
+  // set frequency based on X coordinate
+  const freq = minFreq + ratioX * (maxFreq - minFreq);
 
   // display frequency
   freqDisplay.innerText = Math.trunc(freq);
