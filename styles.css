@@ -31,6 +31,10 @@ body {
   margin-top: 1rem;
 }
 
+#volume-slider {
+  accent-color: rgb(50, 200, 150);
+}
+
 #stats-display {
   margin-top: 1rem;
   width: 15rem;
