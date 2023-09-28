@@ -4,7 +4,6 @@ const minDelay = 0.01;
 const maxDelay = 2;
 
 const canvas = document.getElementById("canvas");
-// const canvasCtx = canvas.getContext("2d");
 
 const audioCtx = new AudioContext();
 let mainGainNode;
@@ -32,8 +31,15 @@ canvas.addEventListener("click", function (e) {
   const ratioY = (e.clientY - canvas.offsetTop) / canvas.offsetHeight;
 
   // change canvas color based on X & Y coordinates
-  const color = `rgb(${255 * ratioX}, ${255 * ratioY}, ${255 * (1 - ratioX)})`;
-  canvas.style.backgroundColor = color;
+  const color = `rgb(
+    ${Math.floor(255 * ratioX)},
+    ${Math.floor(255 * ratioY)},
+    ${Math.floor(255 * (1 - ratioX))}
+  )`;
+
+  applyCursorRippleEffect(e);
+  const latestRipple = document.querySelector(".ripple:last-child");
+  latestRipple.style.borderColor = color;
 
   // set frequency based on X coordinate
   const freq = minFreq + ratioX * (maxFreq - minFreq);
@@ -65,4 +71,17 @@ function playTone(freq, delay) {
   osc.start();
 
   return osc;
+}
+
+function applyCursorRippleEffect(e) {
+  const ripple = document.createElement("div");
+
+  ripple.className = "ripple";
+  document.body.appendChild(ripple);
+
+  ripple.style.left = `${e.clientX}px`;
+  ripple.style.top = `${e.clientY}px`;
+
+  ripple.style.animation = "ripple-effect 1s linear";
+  ripple.onanimationend = () => document.body.removeChild(ripple);
 }
