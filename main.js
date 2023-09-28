@@ -1,28 +1,21 @@
 // var canvas = document.getElementById("main");
 // var context = canvas.getContext("2d");
 
-// // ALT: load first, then resume playback when user interacts
-// var context;
-// window.onload = function () {
-//   context = new AudioContext();
-//   // set up all nodes
-//   // ...
-// };
-// // (then, in event listener)
-// context.resume().then(() => {
-//   console.log("Playback resumed successfully");
-// });
-
 const minFreq = 30;
 const maxFreq = 1000;
 
+let isAudioContextAllowed = false;
 let audioCtx = new AudioContext();
-const oscList = [];
 let mainGainNode = null;
 
 const wavePicker = document.querySelector("select[name='waveform']");
 const volumeControl = document.querySelector("input[name='volume']");
+const freqDisplay = document.querySelector("#stats-freq");
 
+// allow AudioContext
+document.addEventListener("click", () => audioCtx.resume(), { once: true });
+
+// set up main gain node
 mainGainNode = audioCtx.createGain();
 mainGainNode.connect(audioCtx.destination);
 mainGainNode.gain.value = volumeControl.value;
@@ -40,16 +33,10 @@ document.querySelector("canvas").addEventListener("click", function (e) {
   const freq = minFreq + canvasRatioX * (maxFreq - minFreq);
 
   // display frequency
-  const freqElem = document.querySelector("#stats-freq");
-  freqElem.innerText = Math.trunc(freq);
+  freqDisplay.innerText = Math.trunc(freq);
 
-  try {
-    audioCtx.resume();
-
-    playTone(freq);
-  } catch (e) {
-    console.log(e);
-  }
+  // play tone
+  playTone(freq);
 });
 
 function playTone(freq) {
