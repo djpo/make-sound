@@ -3,6 +3,8 @@
 
 const minFreq = 30;
 const maxFreq = 1000;
+const minDelay = 0.01;
+const maxDelay = 2;
 
 let isAudioContextAllowed = false;
 let audioCtx = new AudioContext();
@@ -38,14 +40,17 @@ document.querySelector("canvas").addEventListener("click", function (e) {
   // set frequency based on X coordinate
   const freq = minFreq + ratioX * (maxFreq - minFreq);
 
+  // set audio delay time based on Y coordinate
+  const delay = minDelay + ratioY * (maxDelay - minDelay);
+
   // display frequency
   freqDisplay.innerText = Math.trunc(freq);
 
   // play tone
-  playTone(freq);
+  playTone(freq, delay);
 });
 
-function playTone(freq) {
+function playTone(freq, delay) {
   const osc = audioCtx.createOscillator();
 
   // create gain node for each tone
@@ -54,7 +59,7 @@ function playTone(freq) {
   toneGainNode.connect(mainGainNode);
 
   // set tone amplitude fadeout
-  toneGainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.4);
+  toneGainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + delay);
 
   // set tone tone shape, frequency
   osc.type = wavePicker.options[wavePicker.selectedIndex].value;
