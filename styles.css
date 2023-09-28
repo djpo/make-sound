@@ -28,3 +28,15 @@ canvas {
   align-self: center;
   background-color: darkred;
 }
+
+#stats-display {
+  margin-top: 1rem;
+  width: 400px;
+  align-self: center;
+  background-color: rgba(40, 50, 128, 0.7);
+}
+
+#stats-display p {
+  margin: 0.5rem;
+  color: white;
+}

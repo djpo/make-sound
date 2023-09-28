@@ -39,6 +39,10 @@ document.querySelector("canvas").addEventListener("click", function (e) {
     (e.clientX - canvasElem.offsetLeft) / canvasElem.offsetWidth;
   const freq = minFreq + canvasRatioX * (maxFreq - minFreq);
 
+  // display frequency
+  const freqElem = document.querySelector("#stats-freq");
+  freqElem.innerText = Math.trunc(freq);
+
   try {
     audioCtx.resume();
 
