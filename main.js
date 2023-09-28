@@ -62,8 +62,16 @@ document.querySelector("canvas").addEventListener("click", function () {
 
 function playTone(freq) {
   const osc = audioCtx.createOscillator();
-  osc.connect(mainGainNode);
 
+  // create gain node for each tone
+  const toneGainNode = audioCtx.createGain();
+  osc.connect(toneGainNode);
+  toneGainNode.connect(mainGainNode);
+
+  // set tone amplitude fadeout
+  toneGainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.4);
+
+  // set tone tone shape, frequency
   osc.type = wavePicker.options[wavePicker.selectedIndex].value;
   osc.frequency.value = freq;
   osc.start();
