@@ -9,11 +9,9 @@
   </head>
 
   <body>
-    <canvas width="400" height="400" id="main"></canvas>
-
-    <div class="settingsBar">
-      <div class="left">
-        <span>volume: </span>
+    <div id="settings">
+      <div>
+        <span>volume</span>
         <input
           type="range"
           min="0.0"
@@ -24,9 +22,8 @@
           name="volume"
         />
       </div>
-
-      <div class="right">
-        <span>waveform: </span>
+      <div>
+        <span>waveform</span>
         <select name="waveform">
           <option value="sine" selected>sine</option>
           <option value="square">square</option>
@@ -35,6 +32,8 @@
         </select>
       </div>
     </div>
+
+    <canvas width="400" height="400" id="main"></canvas>
 
     <script src="./main.js"></script>
   </body>
