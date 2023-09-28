@@ -77,11 +77,11 @@ function applyCursorRippleEffect(e) {
   const ripple = document.createElement("div");
 
   ripple.className = "ripple";
-  document.body.appendChild(ripple);
-
   ripple.style.left = `${e.clientX}px`;
   ripple.style.top = `${e.clientY}px`;
+  ripple.style.animation = "ripple-effect 2s linear";
 
-  ripple.style.animation = "ripple-effect 1s linear";
-  ripple.onanimationend = () => document.body.removeChild(ripple);
+  canvas.appendChild(ripple);
+
+  ripple.onanimationend = () => canvas.removeChild(ripple);
 }
