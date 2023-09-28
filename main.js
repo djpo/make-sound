@@ -1,19 +1,17 @@
-// var canvas = document.getElementById("main");
-// var context = canvas.getContext("2d");
-
 const minFreq = 30;
 const maxFreq = 1000;
 const minDelay = 0.01;
 const maxDelay = 2;
 
-let isAudioContextAllowed = false;
-let audioCtx = new AudioContext();
-let mainGainNode = null;
+const canvas = document.getElementById("canvas");
+// const canvasCtx = canvas.getContext("2d");
+
+const audioCtx = new AudioContext();
+let mainGainNode;
 
 const wavePicker = document.querySelector("select[name='waveform']");
 const volumeControl = document.querySelector("input[name='volume']");
-const canvasElem = document.getElementById("main");
-const freqDisplay = document.querySelector("#stats-freq");
+const freqDisplay = document.getElementById("stats-freq");
 
 // allow AudioContext
 document.addEventListener("click", () => audioCtx.resume(), { once: true });
@@ -28,14 +26,14 @@ function changeVolume() {
 }
 
 // listen to clicks on canvas
-document.querySelector("canvas").addEventListener("click", function (e) {
+canvas.addEventListener("click", function (e) {
   // calculate ratios of click coordinates to canvas
-  const ratioX = (e.clientX - canvasElem.offsetLeft) / canvasElem.offsetWidth;
-  const ratioY = (e.clientY - canvasElem.offsetTop) / canvasElem.offsetHeight;
+  const ratioX = (e.clientX - canvas.offsetLeft) / canvas.offsetWidth;
+  const ratioY = (e.clientY - canvas.offsetTop) / canvas.offsetHeight;
 
   // change canvas color based on X & Y coordinates
   const color = `rgb(${255 * ratioX}, ${255 * ratioY}, ${255 * (1 - ratioX)})`;
-  canvasElem.style.backgroundColor = color;
+  canvas.style.backgroundColor = color;
 
   // set frequency based on X coordinate
   const freq = minFreq + ratioX * (maxFreq - minFreq);
