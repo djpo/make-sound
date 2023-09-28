@@ -13,6 +13,9 @@
 //   console.log("Playback resumed successfully");
 // });
 
+const minFreq = 30;
+const maxFreq = 1000;
+
 let audioCtx = new AudioContext();
 const oscList = [];
 let mainGainNode = null;
@@ -28,33 +31,18 @@ function changeVolume() {
   mainGainNode.gain.value = volumeControl.value;
 }
 
-// listen to keyboard events
-document.addEventListener("keydown", function (e) {
-  // left arrow key
-  if (e.which === 37) {
-    console.log("LEFT");
-  }
-  // up arrow key
-  else if (e.which === 38) {
-    console.log("UP");
-  }
-  // right arrow key
-  else if (e.which === 39) {
-    console.log("RIGHT");
-  }
-  // down arrow key
-  else if (e.which === 40) {
-    console.log("DOWN");
-  }
-});
-
 // listen to clicks on canvas
-document.querySelector("canvas").addEventListener("click", function () {
-  console.log("click");
+document.querySelector("canvas").addEventListener("click", function (e) {
+  // set frequency based on horizontal click coordinate
+  const canvasElem = document.getElementById("main");
+  const canvasRatioX =
+    (e.clientX - canvasElem.offsetLeft) / canvasElem.offsetWidth;
+  const freq = minFreq + canvasRatioX * (maxFreq - minFreq);
+
   try {
     audioCtx.resume();
 
-    playTone(440);
+    playTone(freq);
   } catch (e) {
     console.log(e);
   }
