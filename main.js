@@ -10,6 +10,7 @@ let mainGainNode = null;
 
 const wavePicker = document.querySelector("select[name='waveform']");
 const volumeControl = document.querySelector("input[name='volume']");
+const canvasElem = document.getElementById("main");
 const freqDisplay = document.querySelector("#stats-freq");
 
 // allow AudioContext
@@ -26,10 +27,14 @@ function changeVolume() {
 
 // listen to clicks on canvas
 document.querySelector("canvas").addEventListener("click", function (e) {
-  // set frequency based on horizontal click coordinate
-  const canvasElem = document.getElementById("main");
   const canvasRatioX =
     (e.clientX - canvasElem.offsetLeft) / canvasElem.offsetWidth;
+
+  // change canvas color based on horizontal click coordinate
+  const color = `rgb(${255 * canvasRatioX}, 255, ${255 * (1 - canvasRatioX)})`;
+  canvasElem.style.backgroundColor = color;
+
+  // set frequency based on horizontal click coordinate
   const freq = minFreq + canvasRatioX * (maxFreq - minFreq);
 
   // display frequency
