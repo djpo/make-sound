@@ -20,11 +20,13 @@ let mainGainNode = null;
 const wavePicker = document.querySelector("select[name='waveform']");
 const volumeControl = document.querySelector("input[name='volume']");
 
-// volumeControl.addEventListener("change", changeVolume, false);
-
 mainGainNode = audioCtx.createGain();
 mainGainNode.connect(audioCtx.destination);
 mainGainNode.gain.value = volumeControl.value;
+volumeControl.addEventListener("change", changeVolume, false);
+function changeVolume() {
+  mainGainNode.gain.value = volumeControl.value;
+}
 
 // listen to keyboard events
 document.addEventListener("keydown", function (e) {
